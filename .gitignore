@@ -1,0 +1,72 @@
+# ---------------------------------------------------------------
+# Build inputs & outputs — binaries are published as GitHub Release
+# assets only, never committed to git.
+# ---------------------------------------------------------------
+/upstream/
+/dist/
+*.zip
+*.tar.gz
+*.tgz
+*.deb
+*.rpm
+*.pkg
+*.dmg
+*.exe
+*.msi
+*.dll
+*.version
+
+# ---------------------------------------------------------------
+# Secrets — never commit credentials of any kind
+# ---------------------------------------------------------------
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.mobileprovision
+*token*
+*secret*
+*credential*
+.netrc
+id_rsa*
+id_ed25519*
+
+# ---------------------------------------------------------------
+# Internal test / debug material
+# ---------------------------------------------------------------
+*-takeover-test.sh
+*.log
+
+# ---------------------------------------------------------------
+# OS / editor / tooling
+# ---------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*~
+__pycache__/
+*.pyc
+
+# ---------------------------------------------------------------
+# Agent instructions, memories and transcripts — never in git
+# (tools/check-identity.sh refuses commits / releases that contain them)
+# ---------------------------------------------------------------
+CLAUDE.md
+CLAUDE.local.md
+AGENTS.md
+GEMINI.md
+MEMORY.md
+memory/
+.claude/
+.mcp.json
+.cursor/
+.cursorrules
+.codex/
+.aider*
+.continue/
+*.jsonl
