@@ -108,6 +108,13 @@ skyline disconnect       # 切断
 
 サブスクリプション、お支払い、サポート：**[www.skylinevpn.com](https://www.skylinevpn.com)**（唯一の公式サイト）。
 
+## Telegram チャンネル
+
+お知らせやサービス通知は公式 Telegram チャンネルでご確認ください。公式 Telegram チャンネルは次の 2 つのみです：
+
+- [![Telegram @skyline_vpn](https://img.shields.io/badge/Telegram-%40skyline__vpn-26A5E4?logo=telegram&logoColor=white)](https://t.me/skyline_vpn) 公式チャンネル
+- [![Telegram @skyline_vpn_1](https://img.shields.io/badge/Telegram-%40skyline__vpn__1-26A5E4?logo=telegram&logoColor=white)](https://t.me/skyline_vpn_1) 通知チャンネル
+
 ---
 
 © 2026 SKYLINE NETWORKING TECH LLC. 無断転載を禁じます。詳しくは [LICENSE](LICENSE) をご覧ください。

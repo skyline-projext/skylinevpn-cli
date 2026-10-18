@@ -108,6 +108,13 @@ All packages and installers are on the [Releases](https://github.com/skyline-pro
 
 Subscriptions, billing and support: **[www.skylinevpn.com](https://www.skylinevpn.com)** (the only official website).
 
+## Telegram
+
+Follow our official Telegram channels for announcements and service notifications. These are our only official Telegram channels:
+
+- [![Telegram @skyline_vpn](https://img.shields.io/badge/Telegram-%40skyline__vpn-26A5E4?logo=telegram&logoColor=white)](https://t.me/skyline_vpn) Official channel
+- [![Telegram @skyline_vpn_1](https://img.shields.io/badge/Telegram-%40skyline__vpn__1-26A5E4?logo=telegram&logoColor=white)](https://t.me/skyline_vpn_1) Notifications
+
 ---
 
 © 2026 SKYLINE NETWORKING TECH LLC. All rights reserved. See [LICENSE](LICENSE).

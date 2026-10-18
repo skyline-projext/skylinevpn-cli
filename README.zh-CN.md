@@ -108,6 +108,13 @@ skyline disconnect       # 断开连接
 
 订阅、账单与支持：**[www.skylinevpn.com](https://www.skylinevpn.com)**（唯一官方网站）。
 
+## Telegram 频道
+
+关注官方 Telegram 频道，获取公告与服务通知。官方 Telegram 频道仅有以下两个：
+
+- [![Telegram @skyline_vpn](https://img.shields.io/badge/Telegram-%40skyline__vpn-26A5E4?logo=telegram&logoColor=white)](https://t.me/skyline_vpn) 官方频道
+- [![Telegram @skyline_vpn_1](https://img.shields.io/badge/Telegram-%40skyline__vpn__1-26A5E4?logo=telegram&logoColor=white)](https://t.me/skyline_vpn_1) 通知频道
+
 ---
 
 © 2026 SKYLINE NETWORKING TECH LLC. 保留所有权利。详见 [LICENSE](LICENSE)。

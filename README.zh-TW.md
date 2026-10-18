@@ -108,6 +108,13 @@ skyline disconnect       # 中斷連線
 
 訂閱、帳務與支援：**[www.skylinevpn.com](https://www.skylinevpn.com)**（唯一官方網站）。
 
+## Telegram 頻道
+
+關注官方 Telegram 頻道，取得公告與服務通知。官方 Telegram 頻道僅有以下兩個：
+
+- [![Telegram @skyline_vpn](https://img.shields.io/badge/Telegram-%40skyline__vpn-26A5E4?logo=telegram&logoColor=white)](https://t.me/skyline_vpn) 官方頻道
+- [![Telegram @skyline_vpn_1](https://img.shields.io/badge/Telegram-%40skyline__vpn__1-26A5E4?logo=telegram&logoColor=white)](https://t.me/skyline_vpn_1) 通知頻道
+
 ---
 
 © 2026 SKYLINE NETWORKING TECH LLC. 版權所有。詳見 [LICENSE](LICENSE)。
