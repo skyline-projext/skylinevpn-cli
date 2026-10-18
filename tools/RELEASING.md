@@ -24,7 +24,11 @@ Hits inside upstream packages that have been reviewed and accepted can be let th
    `releases/download/<tag>/`, fails if internal build notes remain or the platforms disagree
    on the app version, and writes everything to `dist/<tag>/`. When the installers already
    point at `<tag>`, the assets are published byte-for-byte as upstream built them.
-3. Update `CHANGELOG.md`, commit, `git push origin main`.
+3. `main` only accepts pull requests. Update `CHANGELOG.md` on a branch, commit, push the branch,
+   then `gh pr create` and `gh pr merge --squash`. The repo allows squash merges only, titled by the
+   pull request with an empty body, so `main` stays one short commit per change; GitHub is the
+   committer of that commit, which `check-identity.sh` accepts while the author is the locked identity.
+   Then `git checkout main && git pull`.
 4. Publish and mark as latest:
    ```bash
    tools/publish-release.sh v3.0.1

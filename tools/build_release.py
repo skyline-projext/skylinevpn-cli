@@ -337,9 +337,13 @@ def build_windows(zip_path, work, out, tag):
 def notes(tag, lin, mac, win):
     return f"""## SkylineVPN CLI {tag}
 
+> [!CAUTION]
+> **Fraud warning: `getskyline.org` is a phishing website** and has no affiliation with SKYLINE NETWORKING TECH LLC or SkylineVPN. Do not visit it or enter any information on it.
+> **防诈骗提醒：`getskyline.org` 为钓鱼网站**，与 SKYLINE NETWORKING TECH LLC 及 SkylineVPN 无任何关联。请勿访问，切勿在其中输入任何信息。
+
 > [!IMPORTANT]
-> **The only official website is [www.skylinevpn.com]({SITE}).** Memberships cannot be purchased in the CLI client — please buy a plan on the website first.
-> **唯一官网 [www.skylinevpn.com]({SITE})。** CLI 客户端无法购买会员，请先前往官网购买。
+> **The only official website is [www.skylinevpn.com]({SITE}).** Subscriptions cannot be purchased in the CLI client — please purchase a subscription on the website first.
+> **唯一官网 [www.skylinevpn.com]({SITE})。** CLI 客户端无法购买订阅，请先前往官网购买订阅。
 
 ### One-line install
 
