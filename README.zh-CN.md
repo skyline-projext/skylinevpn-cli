@@ -10,10 +10,13 @@
 
 </div>
 
+> [!CAUTION]
+> **防诈骗提醒：`getskyline.org` 为钓鱼网站。** 该网站并非由 SKYLINE NETWORKING TECH LLC 拥有、运营、授权或认可，与 SkylineVPN 无任何关联。请勿访问该网站，切勿在其中输入账号密码、支付信息或个人信息，也不要从中下载任何软件。因使用该网站造成的任何损失，我们概不负责。如您已在该网站提交信息，请立即修改密码，并通过官方网站联系客服。
+
 > [!IMPORTANT]
 > **唯一官方网站为 [www.skylinevpn.com](https://www.skylinevpn.com)。** 谨防仿冒网站。
 >
-> **CLI 客户端内无法购买会员。** 请先在 [www.skylinevpn.com](https://www.skylinevpn.com) 购买套餐，再使用同一账号登录。
+> **CLI 客户端内无法购买订阅。** 请先在 [www.skylinevpn.com](https://www.skylinevpn.com) 购买订阅，再使用同一账号登录。
 
 ## 系统要求
 
@@ -103,7 +106,7 @@ skyline disconnect       # 断开连接
 
 ## 支持
 
-会员、账单与支持：**[www.skylinevpn.com](https://www.skylinevpn.com)**（唯一官方网站）。
+订阅、账单与支持：**[www.skylinevpn.com](https://www.skylinevpn.com)**（唯一官方网站）。
 
 ---
 

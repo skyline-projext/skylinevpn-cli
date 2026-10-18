@@ -10,10 +10,13 @@
 
 </div>
 
+> [!CAUTION]
+> **詐欺にご注意ください：`getskyline.org` はフィッシングサイトです。** 当該サイトは SKYLINE NETWORKING TECH LLC が所有、運営、許可または承認するものではなく、SkylineVPN とは一切関係ありません。アクセスしないでください。また、アカウント情報、お支払い情報、個人情報を入力したり、ソフトウェアをダウンロードしたりしないでください。当該サイトの利用により生じたいかなる損害についても、当社は責任を負いません。すでに情報を入力された場合は、直ちにパスワードを変更し、公式サイトからサポートにお問い合わせください。
+
 > [!IMPORTANT]
 > **公式サイトは [www.skylinevpn.com](https://www.skylinevpn.com) のみです。** 偽サイトにご注意ください。
 >
-> **CLI クライアントではメンバーシップを購入できません。** 先に [www.skylinevpn.com](https://www.skylinevpn.com) でプランを購入し、同じアカウントでログインしてください。
+> **CLI クライアントではサブスクリプションを購入できません。** 先に [www.skylinevpn.com](https://www.skylinevpn.com) でサブスクリプションを購入し、同じアカウントでログインしてください。
 
 ## 動作環境
 
@@ -103,7 +106,7 @@ skyline disconnect       # 切断
 
 ## サポート
 
-メンバーシップ、お支払い、サポート：**[www.skylinevpn.com](https://www.skylinevpn.com)**（唯一の公式サイト）。
+サブスクリプション、お支払い、サポート：**[www.skylinevpn.com](https://www.skylinevpn.com)**（唯一の公式サイト）。
 
 ---
 

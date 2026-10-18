@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Publishing gate: every commit must be authored and committed by the locked publishing identity,
+# Publishing gate: every commit must be authored and committed by the locked publishing identity
+# (GitHub itself may be the committer of a pull request it merged; the author must still be the identity),
 # carry no co-author / session trailers, git must never hold agent or memory files, and no
 # forbidden term may appear in commit metadata or file contents anywhere in history.
 # Run by tools/publish-release.sh and by the local git hooks (tools/install-hooks.sh).
@@ -14,6 +15,8 @@ set -euo pipefail
 NAME=skyline-projext
 EMAIL=176280006+skyline-projext@users.noreply.github.com
 IDENT="$NAME <$EMAIL>"
+# Committer GitHub records on the commits it creates when a pull request is merged on github.com
+WEB_FLOW="GitHub <noreply@github.com>"
 # Agent instructions, memories, transcripts and editor-agent folders
 AGENT_FILES='(^|/)(CLAUDE(\.local)?\.md|AGENTS\.md|GEMINI\.md|MEMORY\.md|\.mcp\.json|\.cursorrules|copilot-instructions\.md)$|(^|/)(\.claude|\.cursor|\.codex|\.aider[^/]*|\.continue|memory)/|\.jsonl$'
 # Trailers / text that attach anyone but the publishing identity
@@ -45,7 +48,7 @@ if [ "${1:-}" = --commit-msg ]; then
 else
   while IFS='|' read -r sha author committer; do
     [ "$author" = "$IDENT" ] || bad "$sha author is '$author'"
-    [ "$committer" = "$IDENT" ] || bad "$sha committer is '$committer'"
+    [ "$committer" = "$IDENT" ] || [ "$committer" = "$WEB_FLOW" ] || bad "$sha committer is '$committer'"
     git -C "$root" log -1 --format=%B "$sha" | grep -inE "$MSG_LEAKS" | sed "s/^/$sha message: /" >&2 && fail=1
     git -C "$root" log -1 --format='%an %ae %cn %ce%n%B' "$sha" | grep -inFf "$terms" \
       | sed "s/^/$sha metadata has a forbidden term: /" >&2 && fail=1

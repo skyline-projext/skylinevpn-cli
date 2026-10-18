@@ -4,7 +4,7 @@
 # Usage: tools/publish-release.sh <tag> [--confirm-account skyline-projext]   e.g. tools/publish-release.sh v3.0.0
 #        Without --confirm-account it asks on the terminal.
 #
-# Needs: gh, a pushed main branch, and a token for skyline-projext in $GH_TOKEN
+# Needs: gh, a local main equal to origin/main, and a token for skyline-projext in $GH_TOKEN
 # (falls back to the export_ghp_skylinevpn_token line in ~/.zshrc). The token is never written to disk.
 # Refuses to publish unless tools/check-identity.sh passes and the publishing identity is typed back.
 set -euo pipefail
@@ -32,7 +32,7 @@ login=$(gh api user --jq .login)
 
 head=$(git -C "$root" rev-parse HEAD)
 remote=$(git -C "$root" ls-remote origin refs/heads/main | cut -f1)
-[ "$head" = "$remote" ] || { echo "local HEAD is not on origin/main yet: git push -u origin main" >&2; exit 2; }
+[ "$head" = "$remote" ] || { echo "local HEAD is not origin/main: merge the pull request, then git checkout main && git pull" >&2; exit 2; }
 
 # Publishing identity is locked: show it and have it typed back before anything is published.
 cat >&2 <<EOF_

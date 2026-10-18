@@ -10,10 +10,13 @@ Official command-line client for **SkylineVPN** — Linux · macOS · Windows
 
 </div>
 
+> [!CAUTION]
+> **Fraud warning: `getskyline.org` is a phishing website.** It is not owned, operated, authorized or endorsed by SKYLINE NETWORKING TECH LLC and has no affiliation with SkylineVPN. Do not visit it, enter account credentials, payment details or personal information on it, or download any software from it. We accept no responsibility for any loss arising from the use of that website. If you have already entered information there, change your password immediately and contact support through the official website.
+
 > [!IMPORTANT]
 > **The only official website is [www.skylinevpn.com](https://www.skylinevpn.com).** Beware of imitation sites.
 >
-> **Memberships cannot be purchased in the CLI client.** Please buy a plan at [www.skylinevpn.com](https://www.skylinevpn.com) first, then log in with the same account.
+> **Subscriptions cannot be purchased in the CLI client.** Please purchase a subscription at [www.skylinevpn.com](https://www.skylinevpn.com) first, then log in with the same account.
 
 ## Requirements
 
@@ -103,7 +106,7 @@ All packages and installers are on the [Releases](https://github.com/skyline-pro
 
 ## Support
 
-Membership, billing and support: **[www.skylinevpn.com](https://www.skylinevpn.com)** (the only official website).
+Subscriptions, billing and support: **[www.skylinevpn.com](https://www.skylinevpn.com)** (the only official website).
 
 ---
 
