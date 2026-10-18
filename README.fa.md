@@ -108,6 +108,13 @@ skyline disconnect       # قطع اتصال
 
 اشتراک، پرداخت و پشتیبانی: **[www.skylinevpn.com](https://www.skylinevpn.com)** (تنها وب‌سایت رسمی).
 
+## کانال‌های تلگرام
+
+برای دریافت اطلاعیه‌ها و اعلان‌های سرویس، کانال‌های رسمی تلگرام ما را دنبال کنید. تنها کانال‌های رسمی تلگرام ما این دو کانال هستند:
+
+- [![Telegram @skyline_vpn](https://img.shields.io/badge/Telegram-%40skyline__vpn-26A5E4?logo=telegram&logoColor=white)](https://t.me/skyline_vpn) کانال رسمی
+- [![Telegram @skyline_vpn_1](https://img.shields.io/badge/Telegram-%40skyline__vpn__1-26A5E4?logo=telegram&logoColor=white)](https://t.me/skyline_vpn_1) کانال اطلاع‌رسانی
+
 ---
 
 © 2026 SKYLINE NETWORKING TECH LLC. تمامی حقوق محفوظ است. برای جزئیات، [LICENSE](LICENSE) را ببینید.

@@ -108,6 +108,13 @@ skyline disconnect       # отключиться
 
 Подписка, оплата и поддержка: **[www.skylinevpn.com](https://www.skylinevpn.com)** (единственный официальный сайт).
 
+## Каналы в Telegram
+
+Подпишитесь на наши официальные каналы в Telegram, чтобы получать новости и уведомления о работе сервиса. Других официальных каналов в Telegram у нас нет:
+
+- [![Telegram @skyline_vpn](https://img.shields.io/badge/Telegram-%40skyline__vpn-26A5E4?logo=telegram&logoColor=white)](https://t.me/skyline_vpn) Официальный канал
+- [![Telegram @skyline_vpn_1](https://img.shields.io/badge/Telegram-%40skyline__vpn__1-26A5E4?logo=telegram&logoColor=white)](https://t.me/skyline_vpn_1) Уведомления
+
 ---
 
 © 2026 SKYLINE NETWORKING TECH LLC. Все права защищены. Подробнее см. [LICENSE](LICENSE).
