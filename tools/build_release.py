@@ -14,6 +14,8 @@ What it does:
     - points the installers' download URLs at this repo's GitHub release <tag>
       (so an installer always matches its own packages); upstream already gives them
       stable names, which makes .../releases/latest/download/<name> work;
+    - adds the "Skyline VPN - Internet without borders" notice and a progress bar per install step
+      to the installers (fails if their step markers changed upstream);
     - fails if an installer still contains internal build notes / hosts or downloads
       from another release, or if the three platforms disagree on the app version;
     - unpacks every asset down to its last file (zip, tar, deb, pkg, gzip / xz / zstd / pbzx)
@@ -112,6 +114,104 @@ def scrub_common(text, eol="\n"):
     text = sub(text, r"[sS]end the output above to support(?! \()",
                lambda m: f"{m.group(0)} ({SITE})", count_min=0, count_max=99)
     return text
+
+
+SLOGAN = "Skyline VPN - Internet without borders"
+
+# Progress bar and closing notice for the bash installers, inserted after say().
+BASH_PROGRESS = r'''
+# ---------- Progress bar and Skyline VPN notice ----------
+stage_n=0
+stage_total=6
+if [ -t 1 ] && [ "${TERM:-dumb}" != "dumb" ]; then
+  c_bar=$'\033[36m'; c_bold=$'\033[1m'; c_off=$'\033[0m'
+else
+  c_bar=""; c_bold=""; c_off=""
+fi
+# progress_bar <done> <total> <label>
+progress_bar() {
+  local width=30 fill i=0 bar=""
+  fill=$(($1 * width / $2))
+  while [ $i -lt $width ]; do
+    if [ $i -lt $fill ]; then bar="${bar}█"; else bar="${bar}░"; fi
+    i=$((i + 1))
+  done
+  printf '\n%s[%s]%s %3d%%  %s%s%s\n' "$c_bar" "$bar" "$c_off" $(($1 * 100 / $2)) "$c_bold" "$3" "$c_off"
+}
+# stage <Chinese> <English>: start the next step
+stage() {
+  stage_n=$((stage_n + 1))
+  progress_bar $((stage_n - 1)) "$stage_total" "$(t "第 ${stage_n}/${stage_total} 步：$1" "Step ${stage_n}/${stage_total}: $2")"
+}
+stage_done() {
+  progress_bar 1 1 "$(t "全部完成" "All done")"
+}
+slogan() {
+  printf '\n%s%s%s\n%s\n' "$c_bold" "@SLOGAN@" "$c_off" "@SITE@"
+}
+'''.replace("@SLOGAN@", SLOGAN).replace("@SITE@", SITE)
+
+# The same for the PowerShell installer, inserted before its notice.
+PS1_PROGRESS = r'''# Progress bar and Skyline VPN notice
+$script:StageN = 0
+$script:StageTotal = 4
+function Write-ProgressBar([int]$Done, [int]$Total, [string]$Label) {
+    $w = 30
+    $fill = [int][Math]::Floor($Done * $w / $Total)
+    $bar = ([string][char]0x2588) * $fill + ([string][char]0x2591) * ($w - $fill)
+    Write-Host ''
+    Write-Host ('[{0}] {1,3}%  {2}' -f $bar, [int][Math]::Floor($Done * 100 / $Total), $Label) -ForegroundColor Cyan
+}
+function Write-Stage([string]$Zh, [string]$En) {
+    $script:StageN++
+    Write-ProgressBar ($script:StageN - 1) $script:StageTotal (T "第 $($script:StageN)/$($script:StageTotal) 步：$Zh" "Step $($script:StageN)/$($script:StageTotal): $En")
+}
+function Write-Slogan {
+    Write-Host ''
+    Write-Host '@SLOGAN@' -ForegroundColor Cyan
+    Write-Host '@SITE@'
+}
+
+'''.replace("@SLOGAN@", SLOGAN).replace("@SITE@", SITE)
+
+
+def brand_bash(text):
+    """Slogan in the opening notice, a progress bar per install step, slogan again on success."""
+    text = sub(text, r"^(banner\(\) \{\n  cat <<'EOF'\n(=+)\n)", rf"\g<1>  {SLOGAN}\n  {SITE}\n\g<2>\n")
+    text = sub(text, r"^(say\(\) \{\n.*?\n\}\n)", lambda m: m.group(1) + BASH_PROGRESS, flags=re.M | re.S)
+    steps = [
+        (r"^# ---------- Basic checks ----------\n",
+         'if [ "$check_only" -eq 1 ]; then stage_total=3; fi\nstage "系统检测" "Checking the system"\n\n'),
+        (r"^# ---------- Find the \.(deb|pkg) ", 'stage "获取安装包" "Getting the package"\n\n'),
+        (r"^# ---------- sha256 ----------\n", 'stage "校验安装包" "Verifying the package"\n\n'),
+        (r"^# ---------- Save the language before ", 'stage "安装" "Installing"\n\n'),
+        (r"^# ---------- After install: ", 'stage "启动并检查服务" "Starting and checking the service"\n\n'),
+    ]
+    for pattern, call in steps:
+        text = sub(text, pattern, lambda m, call=call: call + m.group(0))
+    text = sub(text, r'^  say "→ 安装前检测" "→ Pre-install checks"$', '  stage "安装前检测" "Pre-install checks"')
+    text = sub(text, r'^(?=if \[ "\$\{ui_lang\}" = "zh" \]; then\ncat <<EOF\n✓ 安装完成)', "stage_done\n")
+    return sub(text, r"^exit 0\n\Z", "slogan\nexit 0\n")
+
+
+def brand_ps1(text, eol):
+    """PowerShell counterpart of brand_bash: the package's own install.ps1 does the install step."""
+    nl = lambda s: s.replace("\n", eol)
+    text = sub(text, r"^(Write-Host '(=+)'\r?\n)(?=Write-Host 'Skyline VPN Windows)",
+               lambda m: nl(PS1_PROGRESS) + m.group(1)
+               + nl(f"Write-Host '  {SLOGAN}' -ForegroundColor Cyan\nWrite-Host '  {SITE}'\n")
+               + m.group(1))
+    steps = [
+        (r"^# Windows version and architecture, checked before downloading",
+         "Write-Stage '系统检测' 'Checking the system'\n"),
+        (r'^    Write-Host \(T "下载 \$ZipName …"', "    Write-Stage '下载安装包' 'Downloading the package'\n"),
+        (r"^    \$hash = \(Get-FileHash ", "    Write-Stage '校验安装包' 'Verifying the package'\n"),
+        (r"^    \$pkg = Join-Path \$work 'pkg'", "    Write-Stage '安装' 'Installing'\n"),
+    ]
+    for pattern, call in steps:
+        text = sub(text, pattern, lambda m, call=call: nl(call) + m.group(0))
+    return sub(text, r"^(    \$code = \$LASTEXITCODE\r?\n)",
+               lambda m: m.group(1) + nl("    if ($code -eq 0) { Write-ProgressBar 1 1 (T '全部完成' 'All done'); Write-Slogan }\n"))
 
 
 def retag(text, tag):
@@ -247,7 +347,7 @@ def build_linux(zip_path, work, out, tag):
     version, build = var(upstream, "APP_VERSION"), var(upstream, "BUILD_TS")
     if var(upstream, "SELF_NAME") != LINUX_INSTALLER:
         die(f"SELF_NAME in {LINUX_INSTALLER} is not {LINUX_INSTALLER}")
-    text = scrub_common(retag(upstream, tag))
+    text = brand_bash(scrub_common(retag(upstream, tag)))
 
     # Packages: verify against the sha256 baked into the installer.
     bundle_dir = os.path.join(work, "linux-bundle")
@@ -298,7 +398,7 @@ def build_macos(zip_path, work, out, tag):
         die(f"{pkg_name}: sha256 does not match the installer")
     if not var(text, "SELF_URL").endswith(f"/{MACOS_INSTALLER}"):
         die(f"SELF_URL in {MACOS_INSTALLER} does not end in {MACOS_INSTALLER}")
-    text = scrub_common(retag(text, tag))
+    text = brand_bash(scrub_common(retag(text, tag)))
 
     # Only the .pkg is published; the bundle's .tar.gz and the PKG_ALT_NAME copy are not.
     write_text(os.path.join(out, MACOS_INSTALLER), text, mode=0o755)
@@ -326,7 +426,7 @@ def build_windows(zip_path, work, out, tag):
         die(f"{zip_name}: sha256 does not match the installer")
     if not var(text, "ZipUrl", "'").endswith(f"/{zip_name}"):
         die(f"$ZipUrl in {WINDOWS_INSTALLER} does not end in {zip_name}")
-    text = scrub_common(retag(text, tag), eol)
+    text = brand_ps1(scrub_common(retag(text, tag), eol), eol)
 
     write_text(os.path.join(out, WINDOWS_INSTALLER), text, bom=bom)
     shutil.copy2(pkg, os.path.join(out, zip_name))

@@ -11,5 +11,6 @@ First public release of the SkylineVPN CLI client.
 | Windows 10+ | x64 | 20261017-205443 |
 
 - One-line installers for Linux, macOS and Windows with automatic architecture detection and SHA-256 verification.
+- Installers show a progress bar with the current step.
 - English / Chinese interface (`skyline lang english` / `skyline lang chinese`).
 - Smart routing and global modes (`skyline mode smart` / `skyline mode global`).
