@@ -14,7 +14,8 @@ Hits inside upstream packages that have been reviewed and accepted can be let th
 `build_release.py <tag> --accept-upstream-terms`, which lists every one of them as a warning.
 
 1. Put the three CI bundles in the repo root (they are git-ignored):
-   `Linux-CLI-*.zip`, `macOS-CLI*.zip`, `Windows-CLI*.zip`
+   `Linux-CLI-*.zip`, `macOS-CLI*.zip`, `Windows-CLI*.zip` (the x64 package, plus the ARM64 package
+   when the installer's `$ZipNameArm64` is set)
 2. Stage the release:
    ```bash
    python3 tools/build_release.py v3.0.1

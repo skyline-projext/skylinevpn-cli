@@ -24,7 +24,7 @@
 |---|---|
 | Linux | Ubuntu 22.04+ / Debian 12+ · amd64, arm64 |
 | macOS | macOS 12+ · Intel و Apple Silicon |
-| Windows | Windows 10+ · x64 |
+| Windows | Windows 10+ · x64; Windows 11 · ARM64 |
 
 ## نصب
 
@@ -94,7 +94,7 @@ skyline disconnect       # قطع اتصال
 
 - **Linux:** فایل `skyline-linux-cli-universal-*.tar.gz` را دانلود و از حالت فشرده خارج کنید، سپس `sudo bash <extracted-folder>/install.sh` را اجرا کنید.
 - **macOS:** فایل `.pkg` و `skyline-macos-install.sh` را در یک پوشه دانلود کنید و `sudo bash skyline-macos-install.sh` را در همان پوشه اجرا کنید.
-- **Windows:** فایل `skyline-windows-cli-amd64-*.zip` را دانلود و از حالت فشرده خارج کنید، سپس روی `install.cmd` دوبار کلیک کنید.
+- **Windows:** فایل `skyline-windows-cli-amd64-*.zip` (برای ARM64: `skyline-windows-cli-arm64-*.zip`) را دانلود و از حالت فشرده خارج کنید، سپس روی `install.cmd` دوبار کلیک کنید.
 
 `bash skyline-linux-install.sh --check <file>` / `bash skyline-macos-install.sh --check <file>` یک بسته را بدون نصب، اعتبارسنجی می‌کند.
 

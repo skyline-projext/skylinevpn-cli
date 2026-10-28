@@ -24,7 +24,7 @@ Official command-line client for **SkylineVPN** — Linux · macOS · Windows
 |---|---|
 | Linux | Ubuntu 22.04+ / Debian 12+ · amd64, arm64 |
 | macOS | macOS 12+ · Intel and Apple silicon |
-| Windows | Windows 10+ · x64 |
+| Windows | Windows 10+ · x64; Windows 11 · ARM64 |
 
 ## Install
 
@@ -94,7 +94,7 @@ All packages and installers are on the [Releases](https://github.com/skyline-pro
 
 - **Linux:** download `skyline-linux-cli-universal-*.tar.gz`, extract it, run `sudo bash <extracted-folder>/install.sh`.
 - **macOS:** download the `.pkg` and `skyline-macos-install.sh` into the same folder, run `sudo bash skyline-macos-install.sh` there.
-- **Windows:** download `skyline-windows-cli-amd64-*.zip`, extract it, double-click `install.cmd`.
+- **Windows:** download `skyline-windows-cli-amd64-*.zip` (ARM64: `skyline-windows-cli-arm64-*.zip`), extract it, double-click `install.cmd`.
 
 `bash skyline-linux-install.sh --check <file>` / `bash skyline-macos-install.sh --check <file>` verifies a package without installing.
 

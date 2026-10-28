@@ -24,7 +24,7 @@
 |---|---|
 | Linux | Ubuntu 22.04+ / Debian 12+ · amd64, arm64 |
 | macOS | macOS 12+ · Intel 與 Apple 晶片 |
-| Windows | Windows 10+ · x64 |
+| Windows | Windows 10+ · x64；Windows 11 · ARM64 |
 
 ## 安裝
 
@@ -94,7 +94,7 @@ skyline disconnect       # 中斷連線
 
 - **Linux：** 下載 `skyline-linux-cli-universal-*.tar.gz`，解壓縮後執行 `sudo bash <extracted-folder>/install.sh`。
 - **macOS：** 將 `.pkg` 與 `skyline-macos-install.sh` 下載至同一個資料夾，並在該資料夾中執行 `sudo bash skyline-macos-install.sh`。
-- **Windows：** 下載 `skyline-windows-cli-amd64-*.zip`，解壓縮後按兩下 `install.cmd`。
+- **Windows：** 下載 `skyline-windows-cli-amd64-*.zip`（ARM64 電腦請下載 `skyline-windows-cli-arm64-*.zip`），解壓縮後按兩下 `install.cmd`。
 
 `bash skyline-linux-install.sh --check <file>` / `bash skyline-macos-install.sh --check <file>` 可在不安裝的情況下驗證套件。
 
