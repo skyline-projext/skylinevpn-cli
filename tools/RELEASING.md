@@ -14,7 +14,8 @@ Hits inside upstream packages that have been reviewed and accepted can be let th
 `build_release.py <tag> --accept-upstream-terms`, which lists every one of them as a warning.
 
 1. Put the three CI bundles in the repo root (they are git-ignored):
-   `Linux-CLI-*.zip`, `macOS-CLI*.zip`, `Windows-CLI*.zip`
+   `Linux-CLI-*.zip`, `macOS-CLI*.zip`, `Windows-CLI*.zip` (the x64 package, plus the ARM64 package
+   when the installer's `$ZipNameArm64` is set)
 2. Stage the release:
    ```bash
    python3 tools/build_release.py v3.0.1
@@ -34,8 +35,15 @@ Hits inside upstream packages that have been reviewed and accepted can be let th
    ```bash
    tools/publish-release.sh v3.0.1
    ```
+   To test the installers on real machines first, add `--prerelease`. `releases/latest` then keeps serving
+   the current release while the testers run the installers from `releases/download/<tag>/`.
+   When the tests pass, promote the pre-release with
+   `gh release edit <tag> --repo skyline-projext/skylinevpn-cli --prerelease=false --latest`.
 5. Verify: download every asset anonymously from `releases/download/<tag>/`, run
    `sha256sum -c SHA256SUMS.txt`, and check that the release and every asset were uploaded by skyline-projext.
+6. Only the newest release stays on the Releases page. Once the new one is latest and verified, delete the
+   previous release but keep its tag: `gh release delete <old tag> --repo skyline-projext/skylinevpn-cli --yes`
+   (without `--cleanup-tag`).
 
 ## Updating the installers of a published release
 

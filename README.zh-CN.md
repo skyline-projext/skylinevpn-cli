@@ -24,7 +24,7 @@
 |---|---|
 | Linux | Ubuntu 22.04+ / Debian 12+ · amd64, arm64 |
 | macOS | macOS 12+ · Intel 与 Apple 芯片 |
-| Windows | Windows 10+ · x64 |
+| Windows | Windows 10+ · x64；Windows 11 · ARM64 |
 
 ## 安装
 
@@ -94,7 +94,7 @@ skyline disconnect       # 断开连接
 
 - **Linux：** 下载 `skyline-linux-cli-universal-*.tar.gz`，解压后运行 `sudo bash <extracted-folder>/install.sh`。
 - **macOS：** 将 `.pkg` 和 `skyline-macos-install.sh` 下载到同一文件夹，并在该文件夹中运行 `sudo bash skyline-macos-install.sh`。
-- **Windows：** 下载 `skyline-windows-cli-amd64-*.zip`，解压后双击 `install.cmd`。
+- **Windows：** 下载 `skyline-windows-cli-amd64-*.zip`（ARM64 电脑下载 `skyline-windows-cli-arm64-*.zip`），解压后双击 `install.cmd`。
 
 `bash skyline-linux-install.sh --check <file>` / `bash skyline-macos-install.sh --check <file>` 可在不安装的情况下校验安装包。
 

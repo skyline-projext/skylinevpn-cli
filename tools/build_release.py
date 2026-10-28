@@ -204,7 +204,7 @@ def brand_ps1(text, eol):
     steps = [
         (r"^# Windows version and architecture, checked before downloading",
          "Write-Stage '系统检测' 'Checking the system'\n"),
-        (r'^    Write-Host \(T "下载 \$ZipName …"', "    Write-Stage '下载安装包' 'Downloading the package'\n"),
+        (r'^    Write-Host \(T "下载 \$(ZipName|pkgName) …"', "    Write-Stage '下载安装包' 'Downloading the package'\n"),
         (r"^    \$hash = \(Get-FileHash ", "    Write-Stage '校验安装包' 'Verifying the package'\n"),
         (r"^    \$pkg = Join-Path \$work 'pkg'", "    Write-Stage '安装' 'Installing'\n"),
     ]
@@ -417,24 +417,44 @@ def build_windows(zip_path, work, out, tag):
     text = raw.decode("utf-8-sig")
     eol = "\r\n" if "\r\n" in text else "\n"
 
-    zip_name, zip_sha = var(text, "ZipName", "'"), var(text, "ZipSha256", "'")
     version, build = var(text, "AppVersion", "'"), var(text, "BuildTs", "'")
-    pkg = os.path.join(src, zip_name)
-    if not os.path.isfile(pkg):
-        die(f"{zip_name} missing from {os.path.basename(zip_path)}")
-    if sha256(pkg) != zip_sha:
-        die(f"{zip_name}: sha256 does not match the installer")
-    if not var(text, "ZipUrl", "'").endswith(f"/{zip_name}"):
-        die(f"$ZipUrl in {WINDOWS_INSTALLER} does not end in {zip_name}")
+    # x64 package, and the ARM64 package of the same build when the installer names one
+    # (its three variables are empty, or missing in installers before 3.0.1, when there is none)
+    pkgs = {"amd64": [var(text, n, "'") for n in ("ZipName", "ZipSha256", "ZipUrl")]}
+    arm = [var(text, n, "'") if re.search(rf"^\${n}\s*=", text, re.M) else ""
+           for n in ("ZipNameArm64", "ZipSha256Arm64", "ZipUrlArm64")]
+    if any(arm):
+        if not all(arm):
+            die(f"$ZipNameArm64, $ZipSha256Arm64 and $ZipUrlArm64 in {WINDOWS_INSTALLER} must be all set or all empty")
+        pkgs["arm64"] = arm
+    for arch, (name, digest, url) in pkgs.items():
+        pkg = os.path.join(src, name)
+        if not os.path.isfile(pkg):
+            die(f"{name} missing from {os.path.basename(zip_path)}")
+        if sha256(pkg) != digest:
+            die(f"{name}: sha256 does not match the installer")
+        if not url.endswith(f"/{name}"):
+            die(f"the download URL of {name} in {WINDOWS_INSTALLER} does not end in {name}")
+        # install.ps1 inside the package refuses to install on the other architecture, judged by this file
+        with zipfile.ZipFile(pkg) as z:
+            try:
+                info = z.read("core/skyline-cli-core.version").decode("utf-8-sig")
+            except KeyError:
+                info = ""
+        m = re.search(r"^arch=(\S+)", info, re.M)
+        if (m.group(1).lower() if m else "amd64") != arch:
+            die(f"{name}: core/skyline-cli-core.version does not say arch={arch}")
     text = brand_ps1(scrub_common(retag(text, tag), eol), eol)
 
     write_text(os.path.join(out, WINDOWS_INSTALLER), text, bom=bom)
-    shutil.copy2(pkg, os.path.join(out, zip_name))
-    return {"version": version, "build": build, "zip": zip_name}
+    for name, _, _ in pkgs.values():
+        shutil.copy2(os.path.join(src, name), os.path.join(out, name))
+    return {"version": version, "build": build, "zip": pkgs["amd64"][0], "zip_arm64": pkgs.get("arm64", [""])[0]}
 
 
 # ---------------------------------------------------------------- notes
 def notes(tag, lin, mac, win):
+    win_arm = f"| Windows 11 ARM64 | `{win['zip_arm64']}` |\n" if win["zip_arm64"] else ""
     return f"""## SkylineVPN CLI {tag}
 
 > [!CAUTION]
@@ -470,7 +490,7 @@ Then: `skyline login` → `skyline nodes` → `skyline connect <number>` → `sk
 | macOS 12+ (universal) | `{mac['pkg']}` |
 | Windows installer | `{WINDOWS_INSTALLER}` |
 | Windows 10+ x64 | `{win['zip']}` |
-| Linux installer | `{LINUX_INSTALLER}` |
+{win_arm}| Linux installer | `{LINUX_INSTALLER}` |
 | Linux amd64 | `{lin['debs']['amd64']}` |
 | Linux arm64 | `{lin['debs']['arm64']}` |
 | Linux offline bundle (amd64 + arm64) | `{lin['bundle']}` |
