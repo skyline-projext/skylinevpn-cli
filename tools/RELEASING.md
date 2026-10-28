@@ -35,8 +35,15 @@ Hits inside upstream packages that have been reviewed and accepted can be let th
    ```bash
    tools/publish-release.sh v3.0.1
    ```
+   To test the installers on real machines first, add `--prerelease`. `releases/latest` then keeps serving
+   the current release while the testers run the installers from `releases/download/<tag>/`.
+   When the tests pass, promote the pre-release with
+   `gh release edit <tag> --repo skyline-projext/skylinevpn-cli --prerelease=false --latest`.
 5. Verify: download every asset anonymously from `releases/download/<tag>/`, run
    `sha256sum -c SHA256SUMS.txt`, and check that the release and every asset were uploaded by skyline-projext.
+6. Only the newest release stays on the Releases page. Once the new one is latest and verified, delete the
+   previous release but keep its tag: `gh release delete <old tag> --repo skyline-projext/skylinevpn-cli --yes`
+   (without `--cleanup-tag`).
 
 ## Updating the installers of a published release
 
